@@ -14,6 +14,8 @@ class App extends Component {
     token: null,
   };
 
+  // Este metodo es el responsable de hacer la autenticacion y de obtener el token del usuario y guardar cierta informacion
+  // en el local storage
   handleLogin = () => {
     fetch("https://pruebatecnica.puntosleal.com/api/user/login", {
       method: "POST",
@@ -48,6 +50,7 @@ class App extends Component {
       });
   };
 
+  // este metodo es el que verifica si el usuario se pudo autenticar o no, envia el respectivo mensaje en cualquiera de los dos casos
   handleLoginVerification = () => {
     if (this.state.token != null) {
       return alert("Autenticacion exitosa");
@@ -56,13 +59,18 @@ class App extends Component {
     }
   };
 
+  // este metodo se llama cuando se crea el componente
   componentDidMount() {
     this.storeCollector();
   }
 
+  // este metodo se llama cuando ocurre alguna actualizacion
   componentDidUpdate() {
     this.handleData();
   }
+
+  // este metodod es que verifica que se haya autenticado correctamente el usuario y que la informacion que esta en el local storage
+  // sea la correcta , una vez que verifica el estado de autenticado hace el update a los respectivos elementos del state
 
   storeCollector() {
     let store = JSON.parse(localStorage.getItem("Login"));
@@ -76,6 +84,8 @@ class App extends Component {
     }
     console.log("autenticated", this.state.isAuthenticated);
   }
+
+  // este metodo es el que solicita la informacion de las transaccion y guarda esta informacion en el elemento data del state
 
   handleData() {
     const token = this.state.token;
@@ -108,6 +118,8 @@ class App extends Component {
       });
   }
 
+  //el metodo render verifica el elemento isVerified , si este esta con valor verdadero hace el render de la informacion obtenida
+  // sino hace el render del login nuevamente
   render() {
     return (
       <React.Fragment>
